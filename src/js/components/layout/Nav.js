@@ -27,9 +27,9 @@ export default class Nav extends React.Component {
           <div className="navbar-header">
             <button type="button" className="navbar-toggle" onClick={this.toggleCollaps.bind(this)}>
               <span className="sr-only">Toggel navigation</span>
-              <spacn className="icon-bar"></spacn>
-              <spacn className="icon-bar"></spacn>
-              <spacn className="icon-bar"></spacn>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
             </button>
           </div>
           <div className={"navbar-collapse"} id="bs-example-navbar-collapse-1">
@@ -38,7 +38,10 @@ export default class Nav extends React.Component {
                 <Link to="/" onClick={this.toggleCollaps.bind(this)}>Todos</Link>
               </li>
               <li className={archivesClass}>
-                <Link to={settingsClass} onClick={this.toggleCollaps.bind(this)}>Settings</Link>
+                <Link to="favorites" onClick={this.toggleCollaps.bind(this)}>Favorite</Link>
+              </li>
+              <li className={settingsClass}>
+                <Link to="settings" onClick={this.toggleCollaps.bind(this)}>Settings</Link>
               </li>
             </ul>
           </div>
