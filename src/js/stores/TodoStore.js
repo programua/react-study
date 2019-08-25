@@ -2,6 +2,7 @@ import { EventEmitter } from "events";
 
 // storesのデータに変更があった場合は、すぐにViewに送信する
 // eventEmitterを使って上記機能を実現する（多分websocketみたいなもの）
+// 継承しているのがReact.ComponentではなくEventEmitterであることに注意
 
 class TodoStore extends EventEmitter {
   constructor() {
@@ -14,10 +15,23 @@ class TodoStore extends EventEmitter {
       },
       {
         id: 235684679,
-        text: "Pay Bills",
+        text: "Pay Water Bills",
         complete: false
       }
     ]
+  }
+
+  createTodo(text) {
+    const id = Date.now();
+
+    this.todos.push({
+      id,
+      text,
+      complete: false
+    });
+
+    // チェンジイベントを送信する 
+    this.emit("change");
   }
 
   getAll() {
@@ -30,4 +44,5 @@ class TodoStore extends EventEmitter {
 // で、その為にはほかのコンポーネントでnewできないようにする必要がある
 // ということで、exportする前に先にnewしてしまう
 const todoStore = new TodoStore;
+window.todoStore = todoStore;
 export default todoStore;

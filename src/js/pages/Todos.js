@@ -11,6 +11,15 @@ export default class Todos extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // ↓ changeイベントを受信したら動く
+    TodoStore.on("change", ()=>{
+      this.setState({
+        todos: TodoStore.getAll()
+      })
+    });
+  }
+
   render() {
     const { todos } = this.state;
 
