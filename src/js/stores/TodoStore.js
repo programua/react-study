@@ -29,5 +29,5 @@ class TodoStore extends EventEmitter {
 // 上記を実現するためにシングルトンパターンを採用する
 // で、その為にはほかのコンポーネントでnewできないようにする必要がある
 // ということで、exportする前に先にnewしてしまう
-const TodoStore = new TodoStore;
-export default TodoStore;
+const todoStore = new TodoStore;
+export default todoStore;
