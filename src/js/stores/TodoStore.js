@@ -1,6 +1,8 @@
 import { EventEmitter } from "events";
+import dispatcher from "../dispatcher";
 
 // storesのデータに変更があった場合は、すぐにViewに送信する
+// （今回の場合は、createTodoメソッドが呼ばれた時））
 // eventEmitterを使って上記機能を実現する（多分websocketみたいなもの）
 // 継承しているのがReact.ComponentではなくEventEmitterであることに注意
 
@@ -37,6 +39,10 @@ class TodoStore extends EventEmitter {
   getAll() {
     return this.todos;
   }
+
+  handleActions(action) {
+    console.log("TodoStore received an action", action);
+  }
 }
 
 // Storeは一つのアプリに一つのインスタンスのみを使用する
@@ -44,5 +50,11 @@ class TodoStore extends EventEmitter {
 // で、その為にはほかのコンポーネントでnewできないようにする必要がある
 // ということで、exportする前に先にnewしてしまう
 const todoStore = new TodoStore;
-window.todoStore = todoStore;
+
+// dispatcher.registerでリスナーを追加している
+// どっかでdispatcherがdispatchすると、ここのregisterがリッスンする
+// で、todoStore.handleActionsが呼び出される
+dispatcher.register(todoStore.handleActions.bind(todoStore));
+
+window.dispatcher = dispatcher;
 export default todoStore;
