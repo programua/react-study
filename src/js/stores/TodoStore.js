@@ -1,6 +1,12 @@
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 
+// What is Stores?
+// StoresはViewがレンダリングするのに必要なデータを保持する。
+// 今回であれば、todosの配列。
+// View（Todo,js）はこのTodoStore.jsからデータを取得し、レンダリングに使用する。
+
+
 // storesのデータに変更があった場合は、すぐにViewに送信する
 // （今回の場合は、createTodoメソッドが呼ばれた時））
 // eventEmitterを使って上記機能を実現する（多分websocketみたいなもの）
@@ -40,8 +46,14 @@ class TodoStore extends EventEmitter {
     return this.todos;
   }
 
+  // Dispatcherは下記メソッドを呼び出し、createTodoメソッドを用いでイベントを送信している
+  // EventEmitterはイベントを受信する（Todo.jsの方）
   handleActions(action) {
-    console.log("TodoStore received an action", action);
+    switch(action.type) {
+      case "CREATE_TODO": {
+        this.createTodo(action.text)
+      }
+    }
   }
 }
 
