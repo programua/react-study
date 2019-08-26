@@ -1,7 +1,16 @@
 import React from "react";
 
 import Todo from "../components/Todo";
+import * as TodoActions from "../actions/TodoActions";
 import TodoStore from "../stores/TodoStore";
+
+/**
+ * flux思想に則ったつくりにするために下記を守ること
+ * View：StoresとActionsとのみつながる
+ * Actions：ViewとDispatcherとのみつながる
+ * Dispatcher：ActionとStoresとのみつながる
+ * Stores：DispatcherとViewとのみつながる
+ */
 
 export default class Todos extends React.Component {
   constructor() {
@@ -20,6 +29,11 @@ export default class Todos extends React.Component {
     });
   }
 
+  // dispatcherの呼び出し
+  createTodo() {
+    TodoActions.createTodo("New Todo");
+  }
+
   render() {
     const { todos } = this.state;
 
@@ -29,6 +43,7 @@ export default class Todos extends React.Component {
 
     return (
       <div>
+        <button onClick={this.createTodo.bind(this)}>Create!</button>
         <h1>Todos</h1>
         <ul>{TodoComponents}</ul>
       </div>
