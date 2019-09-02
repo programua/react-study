@@ -15,6 +15,7 @@ import TodoStore from "../stores/TodoStore";
 export default class Todos extends React.Component {
   constructor() {
     super();
+    this.getTodos = this.getTodos.bind(this);
     this.state = {
       todos: TodoStore.getAll()
     };
@@ -22,13 +23,19 @@ export default class Todos extends React.Component {
 
   componentDidMount() {
     // ↓ changeイベントを受信したら動く
-    TodoStore.on("change", ()=>{
-      this.setState({
-        todos: TodoStore.getAll()
-      })
-    });
-
+    TodoStore.on("change", this.getTodos);
     console.log("count", TodoStore.listenerCount("change"));
+  }
+
+  // stateが使用していたメモリを解放
+  componentWillUnmount() {
+    TodoStore.removeListener("change", this.getTodos);
+  }
+
+  getTodos() {
+    this.setState({
+      todos: TodoStore.getAll()
+    })
   }
 
   // dispatcherの呼び出し

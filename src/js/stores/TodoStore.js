@@ -58,10 +58,7 @@ class TodoStore extends EventEmitter {
       case "CREATE_TODO": {
         this.createTodo(action.text)
       }
-<<<<<<< HEAD
       
-=======
->>>>>>> 468e4e1f80299e1f5fc0a3123fbb56f0dac99168
       case "RECEIVE_TODOS": {
         this.receiveTodos(action.todos);
       }
@@ -80,8 +77,5 @@ const todoStore = new TodoStore;
 // で、todoStore.handleActionsが呼び出される
 dispatcher.register(todoStore.handleActions.bind(todoStore));
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 468e4e1f80299e1f5fc0a3123fbb56f0dac99168
 export default todoStore;
